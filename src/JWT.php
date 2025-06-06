@@ -10,12 +10,13 @@ class JWT
     /**
      * Encode the given array as a JWT token.
      *
-     * @param  array  $token
+     * @param  array  $payload
      * @return string
      */
-    public static function encode($token)
+    public static function encode($payload)
     {
-        return FirebaseJWT::encode($token, static::getKey());
+        // Specify the algorithm explicitly
+        return FirebaseJWT::encode($payload, static::getKey(), 'HS256');
     }
 
     /**
@@ -26,6 +27,7 @@ class JWT
      */
     public static function decode($token)
     {
+        // Decode returns an object; cast to array
         return (array) FirebaseJWT::decode($token, static::getKey(), ['HS256']);
     }
 
